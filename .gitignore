@@ -1,0 +1,11 @@
+.env
+.env.*
+auth.json
+config.yaml
+state.db
+*.log
+__pycache__/
+node_modules/
+backups/
+dist/
+.DS_Store

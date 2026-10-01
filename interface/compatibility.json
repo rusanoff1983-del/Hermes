@@ -1,0 +1,6 @@
+{
+  "tested_upstream": "6f7a7991bb069db07ae74a479823ce8310f8c7e0",
+  "upstream": "https://github.com/NousResearch/hermes-agent",
+  "required_api": "host.models.select",
+  "installation": "git apply compatibility check; refuses conflicts; tests and rebuild required"
+}
