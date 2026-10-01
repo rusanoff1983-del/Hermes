@@ -44,22 +44,25 @@ Hermes/
 
 ---
 
-## 🚀 Как установить нужный плагин
+## 🚀 Быстрый старт на новом ПК
 
-Перейдите в папку нужного плагина и следуйте его инструкции:
-
-1. **Для кнопки «Избранные модели»:**
-   Откройте [plugins/favorites-models/README.md](plugins/favorites-models/README.md)
+1. **Склонируйте репозиторий на свой компьютер:**
    ```bash
-   python install.py --install-deps
+   git clone https://github.com/rusanoff1983-del/Hermes.git
+   cd Hermes
    ```
 
-2. **Для авторизации «Antigravity Google OAuth»:**
-   Откройте [plugins/antigravity-oauth/README.md](plugins/antigravity-oauth/README.md)
-   ```bash
-   # Запустите install.bat в папке plugins/antigravity-oauth или:
-   hermes auth add antigravity-direct
-   ```
+2. **Выберите и установите нужный плагин:**
+
+   - **☆ Кнопка «Избранные модели»:**
+     Дважды кликните по **`install.bat`** (или выполните команду `python install.py --install-deps`), затем перезагрузите окно в Hermes (`Ctrl+K` → «Перезагрузить окно»). Подробнее: [инструкция к плагину](plugins/favorites-models/README.md).
+
+   - **☆ Авторизация «Google Antigravity OAuth»:**
+     Запустите **`install.bat`** внутри папки `plugins/antigravity-oauth` и выполните авторизацию в терминале:
+     ```bash
+     hermes auth add antigravity-direct
+     ```
+     Подробнее: [инструкция к плагину](plugins/antigravity-oauth/README.md).
 
 ---
 
