@@ -1,6 +1,6 @@
-# Hermes — личный монорепозиторий расширений
+# Hermes Favorites Models
 
-Расширения для [Hermes Agent](https://github.com/NousResearch/hermes-agent), а не копия всего Hermes.
+Плагин кнопки «Избранное» (Favorites) для быстрого выбора моделей в [Hermes Desktop](https://github.com/NousResearch/hermes-agent). В дальнейшем планируется объединение с каталогом.
 
 ```text
 Hermes/
