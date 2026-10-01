@@ -44,25 +44,24 @@ Hermes/
 
 ---
 
-## 🚀 Быстрый старт на новом ПК
+## 🚀 Быстрая установка на ПК
 
-1. **Склонируйте репозиторий на свой компьютер:**
-   ```bash
-   git clone https://github.com/rusanoff1983-del/Hermes.git
-   cd Hermes
-   ```
+### Вариант 1. Самый простой (мышкой через браузер)
+1. Нажмите зелёную кнопку **`Code`** вверху этой страницы → выберите **`Download ZIP`**.
+2. Распакуйте скачанный архив в любое место.
+3. Откройте папку и дважды кликните по **`install.bat`**.
+4. В приложении Hermes Desktop нажмите `Ctrl+K` → **«Перезагрузить окно»**.
 
-2. **Выберите и установите нужный плагин:**
+---
 
-   - **☆ Кнопка «Избранные модели»:**
-     Дважды кликните по **`install.bat`** (или выполните команду `python install.py --install-deps`), затем перезагрузите окно в Hermes (`Ctrl+K` → «Перезагрузить окно»). Подробнее: [инструкция к плагину](plugins/favorites-models/README.md).
-
-   - **☆ Авторизация «Google Antigravity OAuth»:**
-     Запустите **`install.bat`** внутри папки `plugins/antigravity-oauth` и выполните авторизацию в терминале:
-     ```bash
-     hermes auth add antigravity-direct
-     ```
-     Подробнее: [инструкция к плагину](plugins/antigravity-oauth/README.md).
+### Вариант 2. Через командную строку (через Git)
+Скопируйте и вставьте команды в терминал:
+```bash
+git clone https://github.com/rusanoff1983-del/Hermes.git
+cd Hermes
+python install.py --install-deps
+```
+После завершения нажмите `Ctrl+K` в Hermes Desktop → **«Перезагрузить окно»**.
 
 ---
 
