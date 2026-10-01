@@ -1,127 +1,70 @@
-# Hermes Plugins & UI Extensions
+# Hermes Plugins & UI Extensions Catalog
 
 Каталог плагинов и интерфейсных расширений для [Hermes Desktop](https://github.com/NousResearch/hermes-agent).
 
-Репозиторий служит каталогом модулей: каждый плагин располагается в своей папке `plugins/<name>`, а установщик `install.py` помогает безопасно интегрировать расширения в интерфейс.
+Каждый модуль изолирован в своей папке внутри `plugins/<имя-плагина>` со своей собственной инструкцией, файлами и скриптами установки.
 
 ---
 
-## Доступные плагины в каталоге
+## 🌟 Доступные плагины в каталоге
 
-### ☆ `favorites-models` — Кнопка «Избранные модели»
+| Плагин | Описание | Инструкция и файлы |
+| :--- | :--- | :--- |
+| ☆ **`favorites-models`** | Компактная кнопка быстрого выбора избранных моделей в шапке чата | [👉 Перейти к плагину](plugins/favorites-models/README.md) |
+| ☆ **`antigravity-oauth`** | Прямой Google Cloud Code / Antigravity OAuth провайдер (Gemini) без сторонних утилит | [👉 Перейти к плагину](plugins/antigravity-oauth/README.md) |
 
-Быстрый выбор любимых моделей прямо перед штатным дропдауном в шапке чата.
-
-![Расположение кнопки в интерфейсе](docs/images/button-placement.png)
-
-#### Возможности:
-- **Компактная кнопка «☆»** в панели чата перед штатным выбором модели.
-- **Умное меню**: отображает только модели из твоих реально настроенных провайдеров.
-- **Сворачиваемые группы**: группировка по провайдерам, аккуратное сворачивание списков.
-- **Переключатель каталога**: скрытие лишних моделей в один клик.
-- **Штатный выбор**: использует внутренний мост `host.models.select`, корректно переключая модель для текущего или нового чата без сброса общих настроек профиля.
-- **Локальное сохранение**: состояние меню и выбранное избранное хранятся локально.
-
-<p align="center">
-  <img src="docs/images/favorites-menu-full.png" alt="Полное меню избранного" width="48%" />
-  <img src="docs/images/favorites-dropdown.png" alt="Компактное меню" width="48%" />
-</p>
+*(Каталог пополняется новыми плагинами)*
 
 ---
 
-## Структура каталога
+## 📁 Структура каталога
 
 ```text
 Hermes/
 ├── plugins/
-│   └── favorites-models/       # Плагин кнопки «Избранные модели»
-│       └── plugin.js
-├── interface/
-│   ├── native-model-selection.patch  # Мост host.models.select
-│   └── compatibility.json
-├── docs/
-│   ├── images/                 # Скриншоты интерфейса
-│   └── installation.md
-├── tests/
-├── install.py                  # Установщик плагинов
+│   ├── favorites-models/       # ☆ Плагин «Избранные модели»
+│   │   ├── plugin.js
+│   │   └── README.md
+│   │
+│   └── antigravity-oauth/      # ☆ Плагин «Google Antigravity OAuth»
+│       ├── plugin.yaml
+│       ├── __init__.py
+│       ├── direct.py
+│       ├── wire.mjs
+│       ├── package.json
+│       ├── install.bat
+│       ├── install.sh
+│       └── README.md
+│
+├── interface/                  # Патчи и мосты для Desktop интерфейса
+├── docs/                       # Скриншоты и общая документация
+├── install.py                  # Установщик Desktop-мостов
 └── README.md
 ```
 
-Плагину требуется небольшой мост `host.models.select` в интерфейсе Hermes. Установщик ставит **и мост, и плагин**, проверяет совместимость, запускает тесты и собирает интерфейс.
+---
 
-## Установка на другом ПК — три команды
+## 🚀 Как установить нужный плагин
 
-Сначала установи Hermes **из исходников/git с Desktop**, Git, Python 3.10+ и Node.js 22.22+ / 24.11+ (с npm). Настрой свои провайдеры в Hermes. В Windows подходит установка с исходниками в `%LOCALAPPDATA%\hermes\hermes-agent`.
+Перейдите в папку нужного плагина и следуйте его инструкции:
 
-```sh
-git clone https://github.com/rusanoff1983-del/Hermes.git
-cd Hermes
-python install.py --install-deps
-```
+1. **Для кнопки «Избранные модели»:**
+   Откройте [plugins/favorites-models/README.md](plugins/favorites-models/README.md)
+   ```bash
+   python install.py --install-deps
+   ```
 
-В Linux/macOS, если команда Python называется `python3`, используй `python3 install.py --install-deps`.
+2. **Для авторизации «Antigravity Google OAuth»:**
+   Откройте [plugins/antigravity-oauth/README.md](plugins/antigravity-oauth/README.md)
+   ```bash
+   # Запустите install.bat в папке plugins/antigravity-oauth или:
+   hermes auth add antigravity-direct
+   ```
 
-Если npm-зависимости Hermes уже установлены, достаточно `python install.py`.
+---
 
-Установщик автоматически использует `$HERMES_HOME`; иначе Windows — `%LOCALAPPDATA%/hermes`, Linux/macOS — `~/.hermes`.
+## 🛡 Безопасность
 
-### Явные пути
+- Репозиторий **не содержит** персональных токенов, ключей доступа или настроек пользователей.
+- Все учетные данные шифруются локально на машине пользователя.
 
-```sh
-python install.py --hermes-home "D:/HermesHome" --source "D:/src/hermes-agent" --install-deps
-```
-
-### Сначала проверить, не изменяя файлы
-
-```sh
-python install.py --check
-```
-
-### После установки
-
-- Windows `release/win-unpacked`: установщик обновляет распакованный интерфейс. Перезагрузи окно через палитру команд (`Ctrl+K` → «Перезагрузить окно»).
-- Если распакованная Windows-сборка не найдена: собран `apps/desktop/dist`. Запусти **именно эту** сборку: `cd <исходники-Hermes>/apps/desktop` и `npm exec electron .`.
-- Произвольную установленную MSIX/AppImage/macOS `.app` установщик **не перепаковывает**. Для них используй исходную сборку или отдельно укажи корректный `--renderer-dir`. Подробнее: [установка](docs/installation.md).
-
-## Безопасность и совместимость
-
-- API-ключи, OAuth, `.env`, `auth.json`, `config.yaml`, переписки и личное избранное **не переносятся и не публикуются**.
-- На другом ПК провайдеры подключаются отдельно; установка расширения не выдаёт доступ к аккаунтам.
-- Исходники Hermes не переключаются на другую ветку и не сбрасываются.
-- Перед правкой `git apply --check` проверяет совместимость. При конфликте установщик отказывается менять интерфейс.
-- Проверенная ревизия upstream записана в `interface/compatibility.json`. Другие ревизии допустимы только если патч применим, тесты и сборка проходят; совместимость со всеми будущими версиями не обещается.
-- Перед изменениями создаётся резервная копия с `receipt.json`. Существующие хешированные chunks не удаляются, чтобы не ломать уже открытое окно.
-- После обновления самого Hermes мост может потребовать повторной установки/адаптации. Плагин живёт в пользовательской папке, но мост меняет исходники; эти изменения могут мешать `hermes update`.
-
-## Откат
-
-Путь к записи установки печатается в конце. Команда:
-
-```sh
-python install.py --rollback "<путь-к-backups>/<установка>/receipt.json"
-```
-
-Откат откажется затирать файлы, изменённые после установки. Настройки, ключи и чаты не затрагиваются.
-
-## Тесты
-
-```sh
-python -m unittest discover -s tests -p "test_*.py" -v
-```
-
-Для проверки реального React/Radix плагина с зависимостями исходного Hermes:
-
-```sh
-# Git Bash/Linux/macOS
-HERMES_SOURCE="/path/to/hermes-agent" node tests/plugin-regression.cjs plugins/favorites-models/plugin.js
-```
-
-PowerShell: `$env:HERMES_SOURCE="C:/path/to/hermes-agent"`, затем та же команда `node ...`.
-
-Установщик дополнительно запускает тесты native bridge и штатного выбора модели, TypeScript-проверку и настоящую сборку Desktop.
-
-## Добавление новых расширений
-
-Отдельный каталог на каждое расширение в `plugins/`; изменения общего интерфейса — в `interface/`; инструкции — в `docs/`. Сейчас установщик устанавливает только `favorites-models`. Новые плагины не копируются автоматически без добавления их в установщик.
-
-Исходный Hermes и затронутые upstream-файлы принадлежат Nous Research и участникам проекта. См. [лицензию upstream](https://github.com/NousResearch/hermes-agent/blob/main/LICENSE).

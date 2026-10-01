@@ -1,0 +1,7 @@
+name: antigravity-direct
+manifest_version: 2
+version: 0.1.0
+kind: model-provider
+description: "Direct Antigravity Google Cloud Code Assist provider for Hermes Agent with browser OAuth"
+author: "rusanoff1983-del"
+license: MIT
