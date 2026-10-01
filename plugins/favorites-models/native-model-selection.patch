@@ -1,0 +1,140 @@
+diff --git a/apps/desktop/src/app/model-picker-overlay.test.tsx b/apps/desktop/src/app/model-picker-overlay.test.tsx
+index 347fa6b8c..a22bbcf33 100644
+--- a/apps/desktop/src/app/model-picker-overlay.test.tsx
++++ b/apps/desktop/src/app/model-picker-overlay.test.tsx
+@@ -12,6 +12,24 @@ import { $sessionTiles } from '@/store/session-states'
+ import { stubMenuDomApis, stubResizeObserver } from '@/test/jsdom'
+ 
+ import { ModelPickerOverlay } from './model-picker-overlay'
++import { modelsHost } from '@/sdk/models'
++import { $activeSessionId, $currentModel, $currentProvider } from '@/store/session'
++
++it('plugin selection paints a fresh draft through native controls without a config RPC', async () => {
++  $activeSessionId.set(null)
++  $selectedStoredSessionId.set(null)
++  $gatewayState.set('open')
++  const request = vi.fn(async () => undefined as never)
++  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
++  render(<QueryClientProvider client={client}><I18nProvider>
++    <ModelPickerOverlay onSelect={() => undefined} profile="default" requestGateway={request} />
++  </I18nProvider></QueryClientProvider>)
++  expect(await modelsHost.select({ model: 'favorite-exact-model', provider: 'openai' })).toBe(true)
++  expect($currentModel.get()).toBe('favorite-exact-model')
++  expect($currentProvider.get()).toBe('openai')
++  expect(request).not.toHaveBeenCalled()
++  client.clear()
++})
+ 
+ // The mock below replaces the computed store with a writable atom.
+ const $focusedTreePaneId = $focusedTreePaneIdMock as unknown as WritableAtom<null | string>
+diff --git a/apps/desktop/src/app/model-picker-overlay.tsx b/apps/desktop/src/app/model-picker-overlay.tsx
+index 9ad25f312..8f8305098 100644
+--- a/apps/desktop/src/app/model-picker-overlay.tsx
++++ b/apps/desktop/src/app/model-picker-overlay.tsx
+@@ -1,6 +1,8 @@
+ import { useStore } from '@nanostores/react'
+ import { useQueryClient } from '@tanstack/react-query'
+-import { useCallback } from 'react'
++import { useCallback, useEffect } from 'react'
++import { registerModelSelection } from '@/sdk/models'
++import { notifyError } from '@/store/notifications'
+ 
+ import { useModelControls } from '@/app/session/hooks/use-model-controls'
+ import type { ModelSelection } from '@/app/shell/model-menu-panel'
+@@ -81,6 +83,23 @@ export function ModelPickerOverlay({
+   const currentModel = focusedRuntimeId && focusedModel !== null ? focusedModel : primaryModel
+   const currentProvider = focusedRuntimeId && focusedProvider !== null ? focusedProvider : primaryProvider
+ 
++  useEffect(() => registerModelSelection(async selection => {
++    if (!gatewayOpen) {
++      notifyError(new Error('Нет соединения с Hermes.'), 'Модель не переключена')
++      return false
++    }
++    // A stored chat without a runtime is loading, not a new draft.
++    // Never fall through to another chat or a profile default.
++    const stored = $focusedStoredSessionId.get() ?? $selectedStoredSessionId.get()
++    const focusedRuntime = $focusedRuntimeId.get()
++    const runtime = stored ? focusedRuntime : $activeSessionId.get()
++    if (stored && !runtime) {
++      notifyError(new Error('Чат ещё загружается. Повтори выбор после загрузки.'), 'Модель не переключена')
++      return false
++    }
++    return selectFocusedModel({ ...selection, sessionId: runtime ?? null })
++  }), [gatewayOpen, selectFocusedModel])
++
+   if (!gatewayOpen) {
+     return null
+   }
+diff --git a/apps/desktop/src/sdk/index.ts b/apps/desktop/src/sdk/index.ts
+index b67078b70..c6e84fa62 100644
+--- a/apps/desktop/src/sdk/index.ts
++++ b/apps/desktop/src/sdk/index.ts
+@@ -113,6 +113,7 @@ import { sessionsHost } from './sessions'
+ import { desktopSettings } from './settings'
+ 
+ export type { DesktopSettingKey, DesktopSettingValues } from './settings'
++import { modelsHost } from './models'
+ 
+ // -- state: readonly views over the app's live atoms -------------------------
+ 
+@@ -663,6 +664,7 @@ async function awaitProfileActivation(
+ }
+ 
+ export const host = {
++  models: modelsHost,
+   state: {
+     /** Runtime id of the active chat session (null on a fresh draft). */
+     activeSessionId: readonlyAtom<null | string>($activeSessionId),
+diff --git a/apps/desktop/src/sdk/models.ts b/apps/desktop/src/sdk/models.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/desktop/src/sdk/models.ts
+@@ -0,0 +1,19 @@
++export interface PluginModelSelection {
++  model: string
++  provider: string
++}
++type ModelSelector = (selection: PluginModelSelection) => Promise<boolean>
++let nativeSelect: ModelSelector | undefined
++/** Installed by the app-wide focused model picker; never writes profile defaults. */
++export function registerModelSelection(select: ModelSelector): () => void {
++  nativeSelect = select
++  return () => { if (nativeSelect === select) nativeSelect = undefined }
++}
++export const modelsHost = {
++  /** Same action as the native picker, including sessionless draft selection. */
++  select: async (selection: PluginModelSelection): Promise<boolean> => {
++    if (!selection || typeof selection.model !== 'string' || !selection.model ||
++      typeof selection.provider !== 'string' || !selection.provider) return false
++    return nativeSelect ? nativeSelect(selection) : false
++  }
++}
+diff --git a/apps/desktop/src/sdk/models.test.ts b/apps/desktop/src/sdk/models.test.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/desktop/src/sdk/models.test.ts
+@@ -0,0 +1,24 @@
++import { afterEach, describe, expect, it, vi } from 'vitest'
++import { modelsHost, registerModelSelection } from './models'
++let dispose: (() => void) | undefined
++afterEach(() => { dispose?.(); dispose = undefined })
++describe('native plugin model selection', () => {
++  it('fails closed when native surface is absent', async () => {
++    expect(await modelsHost.select({ model: 'a', provider: 'b' })).toBe(false)
++  })
++  it('delegates draft and live choices to the registered native action', async () => {
++    const select = vi.fn(async () => true)
++    dispose = registerModelSelection(select)
++    const choice = { model: 'exact/model', provider: 'exact-provider' }
++    expect(await modelsHost.select(choice)).toBe(true)
++    expect(select).toHaveBeenCalledWith(choice)
++  })
++  it('preserves refused selection', async () => {
++    dispose = registerModelSelection(async () => false)
++    expect(await modelsHost.select({ model: 'a', provider: 'b' })).toBe(false)
++  })
++  it('propagates failure rather than reporting success', async () => {
++    dispose = registerModelSelection(async () => { throw new Error('offline') })
++    await expect(modelsHost.select({ model: 'a', provider: 'b' })).rejects.toThrow('offline')
++  })
++})
