@@ -19,9 +19,10 @@
 ## 📦 Быстрая установка
 
 ### Вариант 1. Установка в 1 клик (Windows)
-1. Скачайте или клонируйте репозиторий:
+1. Скачайте или клонируйте ветку репозитория:
    ```bash
-   git clone https://github.com/rusanoff1983-del/hermes-antigravity-direct.git
+   git clone -b antigravity-oauth https://github.com/rusanoff1983-del/Hermes.git antigravity-oauth
+   cd antigravity-oauth
    ```
 2. Запустите файл `install.bat`.
    Он автоматически скопирует плагин в папку Hermes и установит необходимые библиотеки Node.js.
