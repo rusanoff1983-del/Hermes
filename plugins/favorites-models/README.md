@@ -1,63 +1,68 @@
-# ☆ Favorites Models Plugin for Hermes Desktop
+<div align="right">
+  <a href="README.ru.md">🇷🇺 Русский</a> &nbsp;|&nbsp;
+  <a href="README.md">🇬🇧 <b>English</b></a>
+</div>
 
-Плагин интерфейса для [Hermes Desktop](https://github.com/NousResearch/hermes-agent), добавляющий компактную кнопку быстрого выбора избранных моделей прямо в панель чата.
+# ⭐ Favorite Models Plugin for Hermes Desktop
 
----
-
-## ✨ Возможности
-
-- **Компактная кнопка «☆»** в панели чата перед штатным выбором модели.
-- **Умное меню**: показывает только модели из твоих реально настроенных провайдеров.
-- **Группировка**: аккуратное сворачивание по провайдерам.
-- **Штатный выбор**: использует мост `host.models.select`, корректно переключая модель для текущего или нового чата без сброса настроек профиля.
-- **Локальное сохранение**: избранное хранится локально в интерфейсе.
+UI plugin for [Hermes Desktop](https://github.com/NousResearch/hermes-agent) that adds a compact quick-select button for favorite models directly into the chat header.
 
 ---
 
-## 📦 Как установить на своём ПК
+## ✨ Features
 
-### Вариант 1. Самый простой (в 1 клик мышкой)
-1. Скачайте репозиторий (кнопка **`Code`** вверху репозитория → **`Download ZIP`**) и распакуйте.
-2. В папке репозитория дважды кликните по файлу **`install.bat`**.
-3. В Hermes Desktop нажмите `Ctrl+K` → **«Перезагрузить окно»**.
+- **Compact "☆" button** in the chat header right before the default model picker.
+- **Smart menu**: dynamically displays models only from your configured providers.
+- **Collapsible groups**: clean provider-based grouping and collapsible lists.
+- **Native model selection**: uses the `host.models.select` bridge to cleanly switch active chat model without resetting user configs.
+- **Local persistence**: your favorite models and menu states are saved locally on your machine.
 
 ---
 
-### Вариант 2. Через терминал (скопировать и вставить)
+## 📦 Installation on Your PC
+
+### Option 1. Simplest (1-Click on Windows)
+1. Download this repository (click **`Code`** at the top → **`Download ZIP`**) and extract it.
+2. Inside `plugins/favorites-models` (or in the root folder), double-click **`install.bat`**.
+3. In Hermes Desktop, press `Ctrl+K` → **"Reload Window"**.
+
+---
+
+### Option 2. Terminal (Copy & Paste)
 ```bash
 git clone https://github.com/rusanoff1983-del/Hermes.git
-cd Hermes
+cd Hermes/plugins/favorites-models
 python install.py --install-deps
 ```
-После завершения нажмите `Ctrl+K` в Hermes Desktop → **«Перезагрузить окно»**.
+After completion, press `Ctrl+K` in Hermes Desktop → **"Reload Window"**.
 
 ---
 
-## 📁 Файлы плагина в этой папке
+## 📁 Plugin Files
 
-- `plugin.js` — готовый скомпилированный плагин (React / Radix UI).
-- `install.py` — скрипт автоматической интеграции и сборки.
-- `native-model-selection.patch` — патч для исходников Hermes Desktop.
-- `models.ts` — TypeScript-исходник модуля выбора моделей.
-- `models.test.ts` — юнит-тесты для TypeScript моста.
-- `compatibility.json` — проверенные ревизии совместимости.
+- `plugin.js` — production-ready React / Radix UI plugin.
+- `install.py` / `install.bat` — automated build and bridge installer scripts.
+- `native-model-selection.patch` — SDK patch for Hermes Desktop source.
+- `models.ts` — TypeScript model selection module source.
+- `models.test.ts` — automated unit tests for TypeScript bridge.
+- `compatibility.json` — verified upstream compatibility hashes.
 
 ---
 
 <details>
-<summary><b>📸 Скриншоты интерфейса (нажмите, чтобы развернуть)</b></summary>
+<summary><b>📸 UI Screenshots (click to expand)</b></summary>
 
 <br />
 
-### Расположение кнопки в панели чата:
+### Button placement in chat header:
 <p align="center">
-  <img src="images/button-placement.png" alt="Расположение кнопки" width="90%" />
+  <img src="images/button-placement.png" alt="Button Placement" width="90%" />
 </p>
 
-### Меню выбора избранных моделей:
+### Favorite models dropdown menu:
 <p align="center">
-  <img src="images/favorites-menu-full.png" alt="Полное меню избранного" width="48%" />
-  <img src="images/favorites-dropdown.png" alt="Компактное меню" width="48%" />
+  <img src="images/favorites-menu-full.png" alt="Full Favorites Menu" width="48%" />
+  <img src="images/favorites-dropdown.png" alt="Compact Dropdown" width="48%" />
 </p>
 
 </details>

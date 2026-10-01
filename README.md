@@ -1,32 +1,39 @@
-# Hermes Plugins & UI Extensions Catalog
+<div align="right">
+  <a href="README.ru.md">🇷🇺 Русский</a> &nbsp;|&nbsp;
+  <a href="README.md">🇬🇧 <b>English</b></a>
+</div>
 
-Каталог плагинов и интерфейсных расширений для [Hermes Desktop](https://github.com/NousResearch/hermes-agent).
+# 🏛️ Hermes Plugins & UI Extensions Catalog
 
-Каждый модуль изолирован в своей папке внутри `plugins/<имя-плагина>` со своей собственной инструкцией, файлами и скриптами установки.
+A modular catalog of plugins and UI extensions for [Hermes Desktop](https://github.com/NousResearch/hermes-agent).
+
+Each plugin is completely isolated inside its own folder under `plugins/<plugin-name>` with its own documentation, files, and 1-click install scripts.
 
 ---
 
-## 🌟 Доступные плагины в каталоге
+## 🌟 Available Plugins
 
-| Плагин | Описание | Инструкция и файлы |
+| Plugin | Description | Documentation & Install |
 | :--- | :--- | :--- |
-| ☆ **`favorites-models`** | Компактная кнопка быстрого выбора избранных моделей в шапке чата | [👉 Перейти к плагину](plugins/favorites-models/README.md) |
-| ☆ **`antigravity-oauth`** | Прямой Google Cloud Code / Antigravity OAuth провайдер (Gemini) без сторонних утилит | [👉 Перейти к плагину](plugins/antigravity-oauth/README.md) |
+| ⭐ **`favorites-models`** | Compact quick-select button for favorite models directly in the chat header | [👉 Open Plugin](plugins/favorites-models/README.md) |
+| ⚡ **`antigravity-oauth`** | Direct Google Cloud Code / Antigravity OAuth provider (Gemini) with zero extra CLI tools | [👉 Open Plugin](plugins/antigravity-oauth/README.md) |
 
-*(Каталог пополняется новыми плагинами)*
+*(New plugins are added regularly)*
 
 ---
 
-## 📁 Структура каталога
+## 📁 Repository Structure
 
 ```text
 Hermes/
 ├── plugins/
-│   ├── favorites-models/       # ☆ Плагин «Избранные модели»
+│   ├── favorites-models/       # ⭐ Favorite Models Plugin
 │   │   ├── plugin.js
-│   │   └── README.md
+│   │   ├── install.bat
+│   │   ├── README.md           # (EN)
+│   │   └── README.ru.md        # (RU)
 │   │
-│   └── antigravity-oauth/      # ☆ Плагин «Google Antigravity OAuth»
+│   └── antigravity-oauth/      # ⚡ Google Antigravity OAuth Plugin
 │       ├── plugin.yaml
 │       ├── __init__.py
 │       ├── direct.py
@@ -34,28 +41,28 @@ Hermes/
 │       ├── package.json
 │       ├── install.bat
 │       ├── install.sh
-│       └── README.md
+│       ├── README.md           # (EN)
+│       └── README.ru.md        # (RU)
 │
-├── interface/                  # Патчи и мосты для Desktop интерфейса
-├── docs/                       # Скриншоты и общая документация
-├── install.py                  # Установщик Desktop-мостов
+├── interface/                  # Native Desktop patches & bridges
+├── docs/                       # Screenshots & extended documentation
 └── README.md
 ```
 
 ---
 
-## 🚀 Как установить плагин из каталога
+## 🚀 How to Install a Plugin
 
-1. Выберите нужный плагин в таблице выше и откройте его папку:
-   - **[☆ Кнопка «Избранные модели»](plugins/favorites-models/README.md)** — быстрое переключение любимых моделей в шапке чата.
-   - **[☆ Вход Google Antigravity OAuth](plugins/antigravity-oauth/README.md)** — прямое подключение моделей Gemini без сторонних CLI.
+1. Choose the desired plugin from the table above and open its folder:
+   - **[⭐ Favorite Models Button](plugins/favorites-models/README.md)** — fast model switcher in the chat header.
+   - **[⚡ Google Antigravity OAuth](plugins/antigravity-oauth/README.md)** — direct Gemini provider with 1-click browser login.
 
-2. Внутри папки каждого плагина лежит **своя собственная инструкция** и отдельный скрипт установки `install.bat` в 1 клик.
+2. Inside each plugin folder, you will find a **ready-to-use `install.bat`** (1-click installation on Windows) and clear step-by-step instructions.
 
 ---
 
-## 🛡 Безопасность
+## 🛡️ Security & Privacy
 
-- Репозиторий **не содержит** персональных токенов, ключей доступа или настроек пользователей.
-- Все учетные данные шифруются локально на машине пользователя.
+- This repository **never contains** private tokens, API keys, or user configurations.
+- All credentials are encrypted locally on your machine using Windows DPAPI / secure storage.
 

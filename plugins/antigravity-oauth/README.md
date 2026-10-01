@@ -1,21 +1,26 @@
-# ☆ Google Antigravity OAuth Plugin (Gemini)
+<div align="right">
+  <a href="README.ru.md">🇷🇺 Русский</a> &nbsp;|&nbsp;
+  <a href="README.md">🇬🇧 <b>English</b></a>
+</div>
 
-Прямой плагин провайдера моделей Google Cloud Code / Antigravity для **Hermes Agent**.
+# ⚡ Google Antigravity OAuth Plugin (Gemini)
 
-Позволяет использовать быстрые модели семейства Gemini (Gemini 3.8 / 3.7 / 3.6 / 3.5 Flash и Pro) напрямую через защищенный вход в Google в браузере — без сторонних утилит и без ручного переноса токенов.
+Direct Google Cloud Code / Antigravity model provider for **Hermes Agent**.
 
----
-
-## 📦 Быстрая установка на ПК
-
-### Вариант 1. Самый простой (в 1 клик мышкой)
-1. Скачайте репозиторий (кнопка **`Code`** вверху страницы → **`Download ZIP`**) и распакуйте архив.
-2. Зайдите в папку `plugins/antigravity-oauth` и дважды кликните по файлу **`install.bat`**.
-3. Скрипт сам скопирует плагин, установит зависимости и откроет браузер для входа в ваш Google-аккаунт.
+Provides direct access to Gemini models (Gemini 3.8 / 3.7 / 3.6 / 3.5 Flash and Pro) via secure 1-click Google OAuth in browser — without third-party CLI tools or manual token copying.
 
 ---
 
-### Вариант 2. Через терминал (скопировать и вставить)
+## 📦 Quick Installation on Your PC
+
+### Option 1. Simplest (1-Click on Windows)
+1. Download this repository (click **`Code`** at the top → **`Download ZIP`**) and extract it.
+2. Open `plugins/antigravity-oauth` and double-click **`install.bat`**.
+3. The script will automatically copy the plugin, install dependencies, and open your browser to log into Google.
+
+---
+
+### Option 2. Terminal (Copy & Paste)
 ```bash
 git clone https://github.com/rusanoff1983-del/Hermes.git
 cd Hermes/plugins/antigravity-oauth
@@ -24,47 +29,47 @@ install.bat
 
 ---
 
-## 🔑 Шаг 2. Авторизация в Google
+## 🔑 Step 2. Google Authentication
 
-> ⚠️ **Важно:** Команда вводится **НЕ в браузере**, а в терминале / командной строке! Браузер откроется сам.
+> ⚠️ **Important:** Do NOT type this command into your browser address bar! Enter it into your terminal / command prompt (`cmd`). The browser will open automatically.
 
-### Как запустить авторизацию:
+### How to Authenticate:
 
-1. Откройте командную строку Windows (**`Win + R`** → напишите **`cmd`** → нажмите **Enter**).
-2. Вставьте туда команду и нажмите **Enter**:
+1. Open Windows Command Prompt (**`Win + R`** → type **`cmd`** → press **Enter**).
+2. Paste this command and press **Enter**:
    ```bash
    hermes auth add antigravity-direct
    ```
-3. **Что произойдёт дальше:**
-   - Команда сама откроет ваш браузер с обычной страницей Google.
-   - В браузере выберите свой Google-аккаунт и нажмите кнопку **«Разрешить»**.
-   - В окне командной строки появится надпись `Connected`. Вход завершён!
+3. **What happens next:**
+   - The command automatically opens your default browser with a standard Google login page.
+   - Choose your Google account and click **"Allow"**.
+   - In your command prompt, you will see `Connected`. Done!
 
 ---
 
-## 🛠 Дополнительные команды для терминала (`cmd`):
+## 🛠 Useful Terminal Commands (`cmd`):
 
-- **Проверить, активен ли вход:**
+- **Check connection status:**
   ```bash
   hermes auth status antigravity-direct
   ```
 
-- **Выйти из аккаунта Google (сбросить авторизацию):**
+- **Log out (remove stored credentials):**
   ```bash
   hermes auth logout antigravity-direct
   ```
 
 ---
 
-## 🚀 Использование
+## 🚀 Usage
 
-### Запуск чата в терминале:
+### Run a chat in terminal:
 ```bash
 hermes chat --provider antigravity-direct -m gemini-3.7-flash-medium
 ```
 
-### Установка провайдером по умолчанию:
-В файле `config.yaml` вашего профиля Hermes укажите:
+### Set as default provider:
+In your Hermes profile `config.yaml`:
 ```yaml
 model:
   default: "gemini-3.7-flash-medium"
@@ -73,7 +78,7 @@ model:
 
 ---
 
-## 📋 Доступные модели
+## 📋 Available Models
 
 - `gemini-3.8-flash-high`, `gemini-3.8-flash-medium`, `gemini-3.8-flash-low`
 - `gemini-3.7-flash-high`, `gemini-3.7-flash-medium`, `gemini-3.7-flash-low`
@@ -83,8 +88,8 @@ model:
 
 ---
 
-## 🛡 Безопасность
+## 🛡️ Security & Privacy
 
-- Репозиторий **не содержит** никаких персональных токенов, ключей или учетных данных.
-- Каждый пользователь авторизуется самостоятельно через свой Google-аккаунт.
-- Токены шифруются локально на компьютере через Windows DPAPI (`credential.dpapi`).
+- This repository **never contains** private tokens, keys, or credentials.
+- Each user authenticates independently via their own Google account.
+- Tokens are encrypted locally on your machine using Windows DPAPI (`credential.dpapi`).
