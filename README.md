@@ -1,7 +1,12 @@
-<div align="right">
-  <a href="README.ru.md">🇷🇺 Русский</a> &nbsp;|&nbsp;
-  <a href="README.md">🇬🇧 <b>English</b></a>
-</div>
+<p align="center">
+  <a href="README.ru.md">
+    <img src="https://img.shields.io/badge/Язык-🇷🇺%20Русский-blue?style=for-the-badge" alt="Русский">
+  </a>
+  &nbsp;&nbsp;
+  <a href="README.md">
+    <img src="https://img.shields.io/badge/Language-🇬🇧%20English-2ea44f?style=for-the-badge" alt="English">
+  </a>
+</p>
 
 # 🏛️ Hermes Plugins & UI Extensions Catalog
 
