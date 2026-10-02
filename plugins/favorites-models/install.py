@@ -135,7 +135,10 @@ def main():
         if state == 'ready':
             for path in CORE_PATHS:
                 backup_file(source / path, backup / 'core' / path, receipt)
-            run(['git', 'apply', ROOT / 'interface/native-model-selection.patch'], source)
+            patch = ROOT / 'native-model-selection.patch'
+            if not patch.is_file():
+                patch = ROOT / 'interface/native-model-selection.patch'
+            run(['git', 'apply', patch], source)
         if args.install_deps:
             run(['npm', 'ci'], source)
         desktop = source / 'apps/desktop'
