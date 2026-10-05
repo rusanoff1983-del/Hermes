@@ -20,7 +20,6 @@ Each plugin is completely isolated inside its own folder under `plugins/<plugin-
 
 | Plugin | Description | Documentation & Install |
 | :--- | :--- | :--- |
-| ⭐ **`favorites-models`** | Compact quick-select button for favorite models directly in the chat header | [👉 Open Plugin](plugins/favorites-models/README.md) |
 | ⚡ **`antigravity-oauth`** | Direct Google Cloud Code / Antigravity OAuth provider (Gemini) with zero extra CLI tools | [👉 Open Plugin](plugins/antigravity-oauth/README.md) |
 
 *(New plugins are added regularly)*
@@ -32,12 +31,6 @@ Each plugin is completely isolated inside its own folder under `plugins/<plugin-
 ```text
 Hermes/
 ├── plugins/
-│   ├── favorites-models/       # ⭐ Favorite Models Plugin
-│   │   ├── plugin.js
-│   │   ├── install.bat
-│   │   ├── README.md           # (EN)
-│   │   └── README.ru.md        # (RU)
-│   │
 │   └── antigravity-oauth/      # ⚡ Google Antigravity OAuth Plugin
 │       ├── plugin.yaml
 │       ├── __init__.py
@@ -48,9 +41,6 @@ Hermes/
 │       ├── install.sh
 │       ├── README.md           # (EN)
 │       └── README.ru.md        # (RU)
-│
-├── interface/                  # Native Desktop patches & bridges
-├── docs/                       # Screenshots & extended documentation
 └── README.md
 ```
 
@@ -59,10 +49,9 @@ Hermes/
 ## 🚀 How to Install a Plugin
 
 1. Choose the desired plugin from the table above and open its folder:
-   - **[⭐ Favorite Models Button](plugins/favorites-models/README.md)** — fast model switcher in the chat header.
    - **[⚡ Google Antigravity OAuth](plugins/antigravity-oauth/README.md)** — direct Gemini provider with 1-click browser login.
 
-2. Inside each plugin folder, you will find a **ready-to-use `install.bat`** (1-click installation on Windows) and clear step-by-step instructions.
+2. Inside each plugin folder, you will find ready-to-use installation scripts (`install.bat` on Windows, `install.sh` on Linux/macOS) and clear step-by-step instructions.
 
 ---
 
